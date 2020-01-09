@@ -19,6 +19,7 @@
   "homepage": "https://github.com/ResearchSoftwareActions/CleanNotebookAction#readme",
   "dependencies": {
     "@actions/core": "^1.2.0",
-    "@actions/github": "^2.0.0"
+    "@actions/github": "^2.0.0",
+    "walk": "^2.3.14"
   }
 }
