@@ -6,7 +6,7 @@ function lint(filename, options = []) {
         if (!options.includes('--disable-cells') && n.cells[i].hasOwnProperty('output')) {
             return false;
         }
-        if (options.includes('--disable-counts') && n.cells[i].execution_count != null) {
+        if (!options.includes('--disable-counts') && n.cells[i].execution_count != null) {
             return false;
         }
     }
