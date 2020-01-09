@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "eslint index.js lint.js && jest"
   },
   "repository": {
     "type": "git",
