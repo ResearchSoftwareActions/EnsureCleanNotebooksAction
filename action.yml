@@ -1,13 +1,10 @@
-name: 'Hello World'
-description: 'Greet someone and record the time'
+name: 'Python Notebook Metadata Linter'
+description: 'Applying a linting check to Python Notebook Metadata.'
 inputs:
-  who-to-greet:  # id of input
-    description: 'Who to greet'
-    required: true
-    default: 'World'
-outputs:
-  time: # id of output
-    description: 'The time we we greeted you'
+  lint-args:
+    description: 'Arguments to pass to the Notebook metadata linting.'
+    required: false
+    default: ''
 runs:
   using: 'node12'
   main: 'dist/index.js'
