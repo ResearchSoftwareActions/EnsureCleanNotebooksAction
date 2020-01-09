@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -21,5 +21,9 @@
     "@actions/core": "^1.2.0",
     "@actions/github": "^2.0.0",
     "walk": "^2.3.14"
+  },
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "jest": "^24.9.0"
   }
 }
