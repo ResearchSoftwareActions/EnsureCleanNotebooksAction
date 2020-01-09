@@ -1,12 +1,12 @@
 const fs = require('fs');
 
-function lint(filename) {
+function lint(filename, options = {}) {
     let n = JSON.parse(fs.readFileSync(filename));
     for (var i in n.cells) {
-        if (n.cells[i].hasOwnProperty('output')) {
+        if (options.output && n.cells[i].hasOwnProperty('output')) {
             return false;
         }
-        if (n.cells[i].execution_count != null) {
+        if (options.execution_count && n.cells[i].execution_count != null) {
             return false;
         }
     }
