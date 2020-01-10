@@ -1,13 +1,16 @@
 const fs = require('fs');
 
-function lint(filename, options = []) {
+function lint(filename, disabled= []) {
     let n = JSON.parse(fs.readFileSync(filename));
-    for (var i in n.cells) {
-        if (!options.includes('outputs') && n.cells[i].output) {
-            console.log(`${filename}: output found`);
+
+    for (let i in n.cells) {
+        const cell = n.cells[i];
+
+        if (!disabled.includes('outputs') && Array.from(cell.outputs).length > 0) {
+            console.log(`${filename}: nonempty outputs found`);
             return false;
         }
-        if (!options.includes('execution-counts') && n.cells[i].execution_count != null) {
+        if (!disabled.includes('execution-counts') && cell.execution_count != null) {
             console.log(`${filename}: execution count found`);
             return false;
         }

@@ -1,8 +1,8 @@
 name: 'Python Notebook Metadata Linter'
 description: 'Applying a linting check to Python Notebook Metadata.'
 inputs:
-  lint-args:
-    description: 'Arguments to pass to the Notebook metadata linting.'
+  disable-checks:
+    description: 'Optional list of linting checks to disable'
     required: false
     default: ''
 runs:

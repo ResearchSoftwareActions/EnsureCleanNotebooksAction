@@ -5,19 +5,21 @@ const path = require('path');
 const lint = require('./lint');
 
 const disableChecks = core.getInput('disable-checks', { required: false });
-var lintOptions = [];
+
+let disabled = [];
 if (disableChecks) {
-    lintOptions = disableChecks.split(',');
+    disabled = disableChecks.split(',');
 }
 
-var walker = walk.walk(".", {followLinks: false, filters: ["node_modules"]});
-var results = [];
+const walker = walk.walk(".", {followLinks: false, filters: ["node_modules"]});
+const results = [];
 walker.on("file", function (root, fileStats, next) {
-  if (path.extname(fileStats.name) == '.ipynb') {
-      results.push(lint(path.join(root, fileStats.name), lintOptions));
+  if (path.extname(fileStats.name) === '.ipynb') {
+      results.push(lint(path.join(root, fileStats.name), disabled));
   }
   next();
 });
+
 walker.on("end", function() {
     console.log(results);
     if(!results.every(i => i)) {
