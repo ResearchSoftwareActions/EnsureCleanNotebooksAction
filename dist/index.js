@@ -75,9 +75,11 @@ walker.on("file", function (root, fileStats, next) {
 });
 
 walker.on("end", function () {
-    console.log(results);
     if (!results.every(i => i)) {
+        console.log(`${results.filter(v => !v).length}/${results.length} notebooks need cleaning!`);
         core.setFailed('Lint failed');
+    } else {
+        console.log(`${results.length}/${results.length} notebooks are clean!`);
     }
 });
 
@@ -849,18 +851,24 @@ function lint(filename, disabled = []) {
     for (let i = 0; i < json.cells.length; ++i) {
 
         const cell = json.cells[i];
+        let fail_this_notebook = false;
 
         if (!disabled.includes('outputs') && has_key(cell, 'outputs')) {
             if (Array.from(cell['outputs']).length > 0) {
                 console.log(`${filename}: nonempty outputs found`);
-                return false;
+                fail_this_notebook = true;
             }
         }
+
         if (!disabled.includes('execution_count') && has_key(cell, 'execution_count')) {
             if (cell['execution_count'] != null) {
-                console.log(`${filename}: execution count found`);
-                return false;
+                console.log(`${filename}: non-null execution count found`);
+                fail_this_notebook = true;
             }
+        }
+
+        if (fail_this_notebook) {
+            return false;
         }
     }
     return true;
