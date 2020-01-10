@@ -3,7 +3,7 @@ const fs = require('fs');
 function lint(filename, options = []) {
     let n = JSON.parse(fs.readFileSync(filename));
     for (var i in n.cells) {
-        if (!options.includes('outputs') && n.cells[i].output) {
+        if (!options.includes('outputs') && Array.from(n.cells[i].outputs).length > 0) {
             console.log(`${filename}: output found`);
             return false;
         }
