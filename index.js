@@ -20,7 +20,6 @@ walker.on("file", function (root, fileStats, next) {
 });
 
 walker.on("end", function () {
-    console.log(results);
     if (!results.every(i => i)) {
         core.setFailed('Lint failed');
     }
