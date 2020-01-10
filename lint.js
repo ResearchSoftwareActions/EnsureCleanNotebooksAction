@@ -4,30 +4,35 @@ function lint(filename, disabled = []) {
 
     const json = JSON.parse(fs.readFileSync(filename, 'utf8'));
 
+    let fail_outputs = false;
+    let fail_execution_count = false;
+
     for (let i = 0; i < json.cells.length; ++i) {
 
         const cell = json.cells[i];
-        let fail_this_notebook = false;
 
-        if (!disabled.includes('outputs') && has_key(cell, 'outputs')) {
+        if (!fail_outputs && !disabled.includes('outputs') && has_key(cell, 'outputs')) {
             if (Array.from(cell['outputs']).length > 0) {
-                console.log(`${filename}: nonempty outputs found`);
-                fail_this_notebook = true;
+                fail_outputs = true;
             }
         }
 
-        if (!disabled.includes('execution_count') && has_key(cell, 'execution_count')) {
+        if (!fail_execution_count && !disabled.includes('execution_count') && has_key(cell, 'execution_count')) {
             if (cell['execution_count'] != null) {
-                console.log(`${filename}: non-null execution count found`);
-                fail_this_notebook = true;
+                fail_execution_count = true;
             }
-        }
-
-        if (fail_this_notebook) {
-            return false;
         }
     }
-    return true;
+
+    // Warn users about which failures are present in this file
+    if (fail_outputs) {
+        console.log(`${filename}: nonempty outputs found`);
+    }
+    if (fail_execution_count) {
+        console.log(`${filename}: non-null execution count found`);
+    }
+
+    return !(fail_outputs || fail_execution_count);
 }
 
 function has_key(obj, key) {
