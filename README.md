@@ -12,7 +12,7 @@ This GitHub action can ensure that CI tests fail unless Jupyter notebooks have b
 Add the following step to your GitHub action:
 
 ```yaml
-- uses: ResearchSoftwareActions/CleanNotebookAction@dev
+- uses: ResearchSoftwareActions/CleanNotebookAction@1.0
 ```
 
 ## Checks
@@ -42,7 +42,7 @@ The full list of checks are:
 ### Full example usage
 
 ```yaml
-- uses: ResearchSoftwareActions/CleanNotebookAction@dev
+- uses: ResearchSoftwareActions/CleanNotebookAction@1.0
   with:
     disable-checks: outputs,execution_count
 ```
