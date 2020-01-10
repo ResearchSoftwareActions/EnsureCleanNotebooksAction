@@ -30,17 +30,17 @@ By default the action will fail if `execution_count` is not `null`.
 
 ## Configure checks
 
-This action takes one optional argument that specifies which checks should be disabled.
+This action takes one optional argument (`disable-checks`) that specifies which checks, supplied as a comma separated list, should be disabled.
 
-The full list of options are:
+The full list of checks are:
 
-- `--disable-cells` disable checks relating to cell outputs
-- `--disable-counts` disable checks relating to execution count
+- `outputs` disable checks relating to cell outputs
+- `execution_count` disable checks relating to execution count
 
 ### Full example usage
 
 ```yaml
 - uses: ResearchSoftwareActions/CleanNotebookAction@dev
   with:
-    lint-args: --disable-counts
+    disable-checks: outputs,execution_count
 ```
