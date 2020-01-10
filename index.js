@@ -9,11 +9,13 @@ var results = [];
 walker.on("file", function (root, fileStats, next) {
   if (path.extname(fileStats.name) == '.ipynb') {
       results.push(lint(path.join(root, fileStats.name)));
-      console.log(results)
   }
   next();
 });
-console.log(results);
-if (!results.every(i => i)) {
-    process.exit(1);
-}
+walker.on("end", function() {
+    console.log(results);
+    if(!results.every(i => i)) {
+        process.exit(1);
+    }
+});
+
