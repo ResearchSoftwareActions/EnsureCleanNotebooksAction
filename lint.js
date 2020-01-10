@@ -1,21 +1,31 @@
 const fs = require('fs');
 
-function lint(filename, disabled= []) {
-    let n = JSON.parse(fs.readFileSync(filename));
+function lint(filename, disabled = []) {
 
-    for (let i in n.cells) {
-        const cell = n.cells[i];
+    const json = JSON.parse(fs.readFileSync(filename, 'utf8'));
 
-        if (!disabled.includes('outputs') && Array.from(cell.outputs).length > 0) {
-            console.log(`${filename}: nonempty outputs found`);
-            return false;
+    for (let i = 0; i < json.cells.length; ++i) {
+
+        const cell = json.cells[i];
+
+        if (!disabled.includes('outputs') && has_key(cell, 'outputs')) {
+            if (Array.from(cell['outputs']).length > 0) {
+                console.log(`${filename}: nonempty outputs found`);
+                return false;
+            }
         }
-        if (!disabled.includes('execution-counts') && cell.execution_count != null) {
-            console.log(`${filename}: execution count found`);
-            return false;
+        if (!disabled.includes('execution_count') && has_key(cell, 'execution_count')) {
+            if (cell['execution_count'] != null) {
+                console.log(`${filename}: execution count found`);
+                return false;
+            }
         }
     }
     return true;
+}
+
+function has_key(obj, key) {
+    return Object.prototype.hasOwnProperty.call(obj, key)
 }
 
 module.exports = lint;

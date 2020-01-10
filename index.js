@@ -1,10 +1,9 @@
 const core = require('@actions/core');
-//const github = require('@actions/github');
 const walk = require('walk');
 const path = require('path');
 const lint = require('./lint');
 
-const disableChecks = core.getInput('disable-checks', { required: false });
+const disableChecks = core.getInput('disable-checks', {required: false});
 
 let disabled = [];
 if (disableChecks) {
@@ -14,16 +13,15 @@ if (disableChecks) {
 const walker = walk.walk(".", {followLinks: false, filters: ["node_modules"]});
 const results = [];
 walker.on("file", function (root, fileStats, next) {
-  if (path.extname(fileStats.name) === '.ipynb') {
-      results.push(lint(path.join(root, fileStats.name), disabled));
-  }
-  next();
+    if (path.extname(fileStats.name) === '.ipynb') {
+        results.push(lint(path.join(root, fileStats.name), disabled));
+    }
+    next();
 });
 
-walker.on("end", function() {
+walker.on("end", function () {
     console.log(results);
-    if(!results.every(i => i)) {
-          core.setFailed('Lint failed');
+    if (!results.every(i => i)) {
+        core.setFailed('Lint failed');
     }
 });
-
