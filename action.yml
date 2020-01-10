@@ -1,5 +1,5 @@
-name: 'Python Notebook Metadata Linter'
-description: 'Applying a linting check to Python Notebook Metadata.'
+name: 'Ensure Clean Jupyter Notebooks'
+description: 'Enforce rules on certain cells and metadata in Jupyter Notebooks'
 inputs:
   disable-checks:
     description: 'Optional list of linting checks to disable'
