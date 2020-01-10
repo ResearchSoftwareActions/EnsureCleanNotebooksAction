@@ -21,6 +21,9 @@ walker.on("file", function (root, fileStats, next) {
 
 walker.on("end", function () {
     if (!results.every(i => i)) {
+        console.log(`${results.filter(v => !v).length}/${results.length} notebooks need cleaning!`);
         core.setFailed('Lint failed');
+    } else {
+        console.log(`${results.length}/${results.length} notebooks are clean!`);
     }
 });
